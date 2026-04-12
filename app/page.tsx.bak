@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
 
 const AGENTS = [
   {
@@ -97,20 +96,6 @@ const WHY_NEXUS = [
 ];
 
 export default function Home() {
-  const [portfolio, setPortfolio] = useState<any>(null);
-
-  useEffect(() => {
-    fetch("http://localhost:8000/performance")
-      .then(r => r.json())
-      .then(d => setPortfolio(d))
-      .catch(() => {});
-  }, []);
-
-  const portfolioValue = portfolio?.portfolio_value ?? 100000;
-  const totalPnl = portfolio?.total_pnl ?? 0;
-  const totalReturn = portfolio?.total_return_pct ?? 0;
-  const totalTrades = portfolio?.total_trades ?? 0;
-  const winRate = portfolio?.win_rate ?? 0;
   return (
     <div className="flex flex-col min-h-screen">
       {/* Nav */}
@@ -208,7 +193,7 @@ export default function Home() {
                 className="text-4xl font-bold font-mono text-text-primary"
                 style={{ textShadow: "0 0 30px rgba(76,175,122,0.35)" }}
               >
-                {portfolioValue.toLocaleString("en-US", {style:"currency",currency:"USD",maximumFractionDigits:0})}
+                $100,000
               </p>
             </div>
             <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-success/10 border border-success/20 shrink-0">
