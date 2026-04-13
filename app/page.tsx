@@ -134,7 +134,7 @@ export default function Home() {
           <span className="text-xs text-success font-medium font-mono">Sistema activo</span>
         </div>
         <span className="text-border hidden sm:inline">·</span>
-        <span className="text-xs text-text-secondary font-mono shrink-0 hidden sm:inline">92 tickers monitoreados 24/7</span>
+        <span className="text-xs text-text-secondary font-mono shrink-0 hidden sm:inline">150 tickers monitoreados 24/7</span>
         <span className="text-border hidden sm:inline">·</span>
         <span className="text-xs text-text-secondary font-mono shrink-0 hidden sm:inline">Sistema activo en paper trading</span>
         <span className="text-border">·</span>
@@ -171,7 +171,7 @@ export default function Home() {
               <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#4CAF7A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
             <span className="text-xs font-mono" style={{ color: "#4CAF7A" }}>
-              Esta semana: <span className="font-semibold">16 operaciones ejecutadas</span> · <span className="font-semibold">Paper trading activo</span> desde Abril 2026
+              Esta semana: <span className="font-semibold">46 operaciones ejecutadas</span> · <span className="font-semibold">Paper trading activo</span> desde Abril 2026
             </span>
           </div>
 
