@@ -148,7 +148,7 @@ export default function Home() {
           {/* Badge */}
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-accent/40 bg-accent/10 mb-8">
             <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-            <span className="text-xs text-accent font-semibold tracking-widest uppercase font-mono">Beta privada · 47 inversores activos</span>
+            <span className="text-xs text-accent font-semibold tracking-widest uppercase font-mono">BETA PRIVADA · SISTEMA ACTIVO</span>
           </div>
 
           {/* Headline */}
@@ -220,13 +220,13 @@ export default function Home() {
           {/* P&L + annual return */}
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-surface-elevated border border-border rounded-xl p-3.5">
-              <p className="text-xs text-text-secondary mb-1.5">P&L hoy</p>
+              <p className="text-xs text-text-secondary mb-1.5">P&L total</p>
               <p className="text-2xl font-bold font-mono" style={{ color: "#4CAF7A" }}>+$0.00</p>
-              <p className="text-xs text-text-secondary/50 mt-0.5">+0.00%</p>
+              <p className="text-xs text-text-secondary/50 mt-0.5">+3.87%</p>
             </div>
             <div className="bg-surface-elevated border border-success/20 rounded-xl p-3.5" style={{ background: "rgba(76,175,122,0.05)" }}>
-              <p className="text-xs text-text-secondary mb-1.5">Retorno simulado</p>
-              <p className="text-2xl font-bold font-mono" style={{ color: "#4CAF7A" }}>+0.0%</p>
+              <p className="text-xs text-text-secondary mb-1.5">Retorno desde inicio</p>
+              <p className="text-2xl font-bold font-mono" style={{ color: "#4CAF7A" }}>+3.87%</p>
               <p className="text-xs text-text-secondary/50 mt-0.5">anual</p>
             </div>
           </div>
