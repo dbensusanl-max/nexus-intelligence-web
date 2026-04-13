@@ -60,7 +60,7 @@ const AGENTS = [
   },
 ];
 
-const LAST_TRADES = ["AAPL", "MSFT", "AMZN", "GOOG", "AMD"];
+const LAST_TRADES = ["NVDA", "PLTR", "TTD", "PANW", "SNOW"];
 
 const WHY_NEXUS = [
   {
@@ -100,7 +100,7 @@ export default function Home() {
   const [portfolio, setPortfolio] = useState<any>(null);
 
   useEffect(() => {
-    fetch("http://localhost:8000/performance")
+    fetch("https://api.nxscapital.ai/performance")
       .then(r => r.json())
       .then(d => setPortfolio(d))
       .catch(() => {});
