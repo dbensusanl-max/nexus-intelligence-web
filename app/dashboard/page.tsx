@@ -36,7 +36,7 @@ interface PortfolioData {
 
 async function fetchPortfolio(): Promise<PortfolioData | null> {
   try {
-    const res = await fetch("http://localhost:8000/portfolio", {
+    const res = await fetch("https://api.nxscapital.ai/portfolio", {
       cache: "no-store",
     });
     if (!res.ok) return null;

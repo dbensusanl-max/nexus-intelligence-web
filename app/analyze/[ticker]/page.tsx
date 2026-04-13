@@ -38,7 +38,7 @@ const VERDICT_CONFIG = {
 };
 
 async function fetchAnalysis(ticker: string): Promise<AnalysisResult> {
-  const res = await fetch(`http://localhost:8000/analyze`, {
+  const res = await fetch(`https://api.nxscapital.ai/analyze`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ ticker }),

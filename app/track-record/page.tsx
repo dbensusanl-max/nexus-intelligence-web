@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-const API = "http://localhost:8000";
+const API = "https://api.nxscapital.ai";
 interface Trade { ticker: string; action: string; price: number; shares: number; pnl?: number; timestamp: string; conviction?: number; }
 interface Performance { portfolio_value: number; starting_value: number; total_pnl: number; total_return_pct: number; total_trades: number; closed_trades: number; win_rate: number; wins: number; losses: number; avg_win: number; avg_loss: number; best_trade: Partial<Trade>; worst_trade: Partial<Trade>; trades: Trade[]; last_updated: string; }
 function fmt(n: number) { return new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",minimumFractionDigits:2}).format(n); }
