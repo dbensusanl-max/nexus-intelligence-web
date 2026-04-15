@@ -188,7 +188,7 @@ export default function LandingPage() {
           <span className="font-semibold">NEXUS Intelligence</span>
         </div>
         <nav className="hidden md:flex items-center gap-6 text-sm text-[#3d4f6e]">
-          <button onClick={() => window.location.href="/how-it-works"} className="hover:text-white transition-colors">Cómo funciona</button>
+          <button onClick={() => window.location.href="/video"} className="hover:text-white transition-colors">Cómo funciona</button>
           <Link href="/track-record" className="hover:text-white transition-colors">Track record</Link>
           <Link href="/dashboard" className="hover:text-white transition-colors">Dashboard</Link>
         </nav>
@@ -225,7 +225,7 @@ export default function LandingPage() {
               Quiero que inviertan por mí
             </button>
             <button
-              onClick={() => window.location.href="/how-it-works"}
+              onClick={() => window.location.href="/video"}
               className="border border-[#1a2540] hover:border-[#6C8EF2] text-[#8a9bbf] hover:text-white px-6 py-3 rounded-xl font-semibold transition-colors"
             >
               Ver cómo funciona
