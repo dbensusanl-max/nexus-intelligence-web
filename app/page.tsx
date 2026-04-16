@@ -236,7 +236,7 @@ export default function LandingPage() {
             href="/dashboard"
             className="inline-flex items-center gap-2 text-sm text-[#3d4f6e] hover:text-[#6C8EF2] transition-colors"
           >
-            Ver mi portafolio → <span className="text-emerald-400">+{pReturn}% esta semana</span>
+            Ver mi portafolio <span className="text-emerald-400">+{pReturn}% esta semana</span>
           </Link>
         </div>
 
