@@ -234,7 +234,7 @@ export default function LandingPage() {
 
           <Link
             href="/dashboard"
-            className="inline-flex items-center gap-2 text-sm text-emerald-400 hover:text-white font-medium underline underline-offset-2 transition-colors"
+            className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-emerald-400 border border-emerald-400/40 rounded-full hover:bg-emerald-400/10 transition-all"
           >
             Ver mi portafolio <span className="text-emerald-400">+{pReturn}% esta semana</span>
           </Link>
