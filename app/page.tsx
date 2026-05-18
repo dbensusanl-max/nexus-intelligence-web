@@ -96,8 +96,16 @@ const WHY_NEXUS = [
   },
 ];
 
+interface PortfolioStats {
+  portfolio_value: number;
+  total_pnl: number;
+  total_return_pct: number;
+  total_trades: number;
+  win_rate: number;
+}
+
 export default function Home() {
-  const [portfolio, setPortfolio] = useState<any>(null);
+  const [portfolio, setPortfolio] = useState<PortfolioStats | null>(null);
 
   useEffect(() => {
     fetch("https://api.nxscapital.ai/performance")
@@ -116,7 +124,7 @@ export default function Home() {
       {/* Nav */}
       <nav className="border-b border-border px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-7 h-7 rounded-md bg-accent flex items-center justify-center">
+          <div className="w-7 h-7 rounded-md bg-accent flex items-center justify-center" aria-hidden="true">
             <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="3" fill="#fff"/>
               <path d="M12 2v4M12 18v4M2 12h4M18 12h4M5.64 5.64l2.83 2.83M15.54 15.54l2.83 2.83M5.64 18.36l2.83-2.83M15.54 8.46l2.83-2.83" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
@@ -133,11 +141,11 @@ export default function Home() {
           <div className="w-1.5 h-1.5 rounded-full bg-success animate-pulse" />
           <span className="text-xs text-success font-medium font-mono">Sistema activo</span>
         </div>
-        <span className="text-border hidden sm:inline">·</span>
+        <span aria-hidden="true" className="text-border hidden sm:inline">·</span>
         <span className="text-xs text-text-secondary font-mono shrink-0 hidden sm:inline">150 tickers monitoreados 24/7</span>
-        <span className="text-border hidden sm:inline">·</span>
+        <span aria-hidden="true" className="text-border hidden sm:inline">·</span>
         <span className="text-xs text-text-secondary font-mono shrink-0 hidden sm:inline">Sistema activo en paper trading</span>
-        <span className="text-border">·</span>
+        <span aria-hidden="true" className="text-border">·</span>
         <span className="text-xs text-text-secondary font-mono shrink-0">Paper trading · Sin riesgo real aún</span>
       </div>
 
@@ -162,30 +170,36 @@ export default function Home() {
           <p className="text-text-secondary text-xl leading-relaxed mb-6 max-w-xl">
             Deja de adivinar.{" "}
             <span className="text-text-primary font-medium">4 inteligencias artificiales</span>{" "}
-            analizan, debaten y ejecutan operaciones reales en tu cuenta — sin que el dinero pase por nosotros.
+            analizan, debaten y ejecutan operaciones reales en tu cuenta, sin que el dinero pase por nosotros.
           </p>
 
           {/* Social proof */}
           <div className="flex items-center gap-2 mb-10 px-3 py-2 rounded-lg bg-surface border border-border">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" className="shrink-0">
+            <svg aria-hidden="true" width="14" height="14" fill="none" viewBox="0 0 24 24" className="shrink-0">
               <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#4CAF7A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-            <span className="text-xs font-mono" style={{ color: "#4CAF7A" }}>
-              Esta semana: <span className="font-semibold">46 operaciones ejecutadas</span> · <span className="font-semibold">Paper trading activo</span> desde Abril 2026
+            <span className="text-xs font-mono text-success">
+              <span className="font-semibold">{totalTrades > 0 ? totalTrades : 46} operaciones ejecutadas</span> · <span className="font-semibold">Paper trading activo</span> desde Abril 2026
             </span>
           </div>
 
           {/* CTAs */}
           <div className="flex items-center gap-3 flex-wrap">
-            <button className="px-7 py-3.5 bg-accent hover:bg-accent-dim text-white rounded-xl text-base font-semibold transition-colors shadow-lg shadow-accent/20">
-              Quiero que inviertan por mí
-            </button>
-            <button className="px-6 py-3.5 border border-border hover:border-text-secondary/40 text-text-secondary hover:text-text-primary rounded-xl text-base font-medium transition-colors">
-              Ver cómo funciona
-            </button>
             <Link
               href="/dashboard"
-              className="px-6 py-3.5 border border-accent/40 hover:border-accent text-accent rounded-xl text-base font-medium transition-colors"
+              className="px-7 py-3.5 bg-accent hover:bg-accent-dim text-white rounded-xl text-base font-semibold transition-colors shadow-lg shadow-accent/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+            >
+              Quiero que inviertan por mí
+            </Link>
+            <a
+              href="#como-funciona"
+              className="px-6 py-3.5 border border-border hover:border-text-secondary/40 text-text-secondary hover:text-text-primary rounded-xl text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
+            >
+              Ver cómo funciona
+            </a>
+            <Link
+              href="/dashboard"
+              className="px-6 py-3.5 border border-accent/40 hover:border-accent text-accent rounded-xl text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
             >
               Ver mi portafolio →
             </Link>
@@ -221,13 +235,29 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-3">
             <div className="bg-surface-elevated border border-border rounded-xl p-3.5">
               <p className="text-xs text-text-secondary mb-1.5">P&L total</p>
-              <p className="text-2xl font-bold font-mono" style={{ color: "#4CAF7A" }}>+$0.00</p>
-              <p className="text-xs text-text-secondary/50 mt-0.5">+3.87%</p>
+              <p
+                className="text-2xl font-bold font-mono"
+                style={{ color: totalPnl >= 0 ? "var(--color-success)" : "var(--color-danger)" }}
+              >
+                {totalPnl >= 0 ? "+" : ""}
+                {totalPnl.toLocaleString("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2 })}
+              </p>
+              <p className="text-xs text-text-secondary/50 mt-0.5">
+                {totalReturn >= 0 ? "+" : ""}{totalReturn.toFixed(2)}%
+              </p>
             </div>
-            <div className="bg-surface-elevated border border-success/20 rounded-xl p-3.5" style={{ background: "rgba(76,175,122,0.05)" }}>
+            <div
+              className="bg-surface-elevated border border-success/20 rounded-xl p-3.5"
+              style={{ background: "color-mix(in oklch, var(--color-success) 5%, transparent)" }}
+            >
               <p className="text-xs text-text-secondary mb-1.5">Retorno desde inicio</p>
-              <p className="text-2xl font-bold font-mono" style={{ color: "#4CAF7A" }}>+3.87%</p>
-              <p className="text-xs text-text-secondary/50 mt-0.5">anual</p>
+              <p
+                className="text-2xl font-bold font-mono"
+                style={{ color: totalReturn >= 0 ? "var(--color-success)" : "var(--color-danger)" }}
+              >
+                {totalReturn >= 0 ? "+" : ""}{totalReturn.toFixed(2)}%
+              </p>
+              <p className="text-xs text-text-secondary/50 mt-0.5">desde inicio</p>
             </div>
           </div>
 
@@ -253,7 +283,7 @@ export default function Home() {
 
           {/* Trust badge */}
           <div className="pt-4 border-t border-border flex items-center gap-2">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" className="shrink-0">
+            <svg aria-hidden="true" width="14" height="14" fill="none" viewBox="0 0 24 24" className="shrink-0">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#8A9BB5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
             <span className="text-xs text-text-secondary/70 leading-snug">
@@ -313,7 +343,7 @@ export default function Home() {
       </section>
 
       {/* Agents Section */}
-      <section className="px-6 py-20 border-t border-border">
+      <section id="como-funciona" className="px-6 py-20 border-t border-border">
         <div className="max-w-5xl mx-auto">
           <div className="mb-12 text-center">
             <p className="text-xs text-text-secondary tracking-widest uppercase mb-3 font-medium font-mono">El sistema</p>
@@ -336,6 +366,7 @@ export default function Home() {
                   <div
                     className="w-9 h-9 rounded-lg flex items-center justify-center"
                     style={{ backgroundColor: `${agent.color}15`, border: `1px solid ${agent.color}30` }}
+                    aria-hidden="true"
                   >
                     {agent.icon}
                   </div>
@@ -406,6 +437,7 @@ export default function Home() {
                 <div
                   className="w-10 h-10 rounded-xl flex items-center justify-center"
                   style={{ backgroundColor: `${color}12`, border: `1px solid ${color}25` }}
+                  aria-hidden="true"
                 >
                   {icon}
                 </div>
@@ -423,7 +455,7 @@ export default function Home() {
       <footer className="border-t border-border px-6 py-8">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-6 h-6 rounded bg-accent/20 border border-accent/30 flex items-center justify-center">
+            <div className="w-6 h-6 rounded bg-accent/20 border border-accent/30 flex items-center justify-center" aria-hidden="true">
               <svg width="10" height="10" fill="none" viewBox="0 0 24 24">
                 <circle cx="12" cy="12" r="3" fill="#6C8EF2"/>
               </svg>
@@ -435,9 +467,9 @@ export default function Home() {
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-6 text-center">
             <span className="text-xs text-text-secondary/50">No somos asesores financieros</span>
-            <span className="hidden sm:inline text-border">·</span>
+            <span aria-hidden="true" className="hidden sm:inline text-border">·</span>
             <span className="text-xs text-text-secondary/50">Paper trading activo</span>
-            <span className="hidden sm:inline text-border">·</span>
+            <span aria-hidden="true" className="hidden sm:inline text-border">·</span>
             <span className="text-xs text-text-secondary/50 font-mono">v0.1 beta</span>
           </div>
         </div>

@@ -44,21 +44,28 @@ export default function ConvictionMeter({ score, size = 180 }: ConvictionMeterPr
   const nx = cx + needleLength * Math.cos(needleRad);
   const ny = cy + needleLength * Math.sin(needleRad);
 
-  // Color based on score
+  // Color based on score — uses CSS variables so tokens stay in sync
   const color =
-    clamped >= 70 ? "#4CAF7A" : clamped >= 40 ? "#E8A04A" : "#E05252";
+    clamped >= 70 ? "var(--color-success)" : clamped >= 40 ? "var(--color-warning)" : "var(--color-danger)";
 
   // Label ticks
   const ticks = [0, 25, 50, 75, 100];
 
   return (
     <div className="flex flex-col items-center gap-2">
-      <svg width={size} height={size * 0.72} viewBox={`0 0 ${size} ${size * 0.72}`} className="overflow-visible">
+      <svg
+        width={size}
+        height={size * 0.72}
+        viewBox={`0 0 ${size} ${size * 0.72}`}
+        className="overflow-visible"
+        role="img"
+        aria-label={`Conviction score: ${clamped} out of 100`}
+      >
         {/* Track */}
         <path
           d={trackPath}
           fill="none"
-          stroke="#232731"
+          stroke="var(--color-border)"
           strokeWidth={strokeWidth}
           strokeLinecap="round"
         />
@@ -71,8 +78,7 @@ export default function ConvictionMeter({ score, size = 180 }: ConvictionMeterPr
             strokeWidth={strokeWidth}
             strokeLinecap="round"
             style={{
-              filter: `drop-shadow(0 0 6px ${color}80)`,
-              transition: "stroke-dasharray 0.6s ease",
+              filter: `drop-shadow(0 0 6px color-mix(in oklch, ${color} 50%, transparent))`,
             }}
           />
         )}
@@ -106,10 +112,10 @@ export default function ConvictionMeter({ score, size = 180 }: ConvictionMeterPr
           stroke={color}
           strokeWidth="2"
           strokeLinecap="round"
-          style={{ transition: "all 0.6s ease" }}
+          style={{ transition: "x2 0.6s cubic-bezier(0.16,1,0.3,1), y2 0.6s cubic-bezier(0.16,1,0.3,1)" }}
         />
         {/* Center dot */}
-        <circle cx={cx} cy={cy} r="5" fill="#1A1D24" stroke={color} strokeWidth="2" />
+        <circle cx={cx} cy={cy} r="5" fill="var(--color-surface-elevated)" stroke={color} strokeWidth="2" />
         {/* Score label */}
         <text
           x={cx}
@@ -126,8 +132,8 @@ export default function ConvictionMeter({ score, size = 180 }: ConvictionMeterPr
           x={cx}
           y={cy - 6}
           textAnchor="middle"
-          fill="#8A9BB5"
-          fontSize="9"
+          fill="var(--color-text-secondary)"
+          fontSize="10"
           fontWeight="500"
           fontFamily="Inter, sans-serif"
           letterSpacing="2"

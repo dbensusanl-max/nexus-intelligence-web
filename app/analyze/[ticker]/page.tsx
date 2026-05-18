@@ -32,9 +32,9 @@ interface AnalysisResult {
 }
 
 const VERDICT_CONFIG = {
-  BUY: { color: "#4CAF7A", bg: "#4CAF7A18", border: "#4CAF7A40" },
-  HOLD: { color: "#E8A04A", bg: "#E8A04A18", border: "#E8A04A40" },
-  SELL: { color: "#E05252", bg: "#E0525218", border: "#E0525240" },
+  BUY:  { color: "var(--color-success)", badgeClass: "text-success bg-success/10 border-success/25" },
+  HOLD: { color: "var(--color-warning)", badgeClass: "text-warning bg-warning/10 border-warning/25" },
+  SELL: { color: "var(--color-danger)",  badgeClass: "text-danger bg-danger/10 border-danger/25"   },
 };
 
 async function fetchAnalysis(ticker: string): Promise<AnalysisResult> {
@@ -74,10 +74,16 @@ export default async function AnalyzePage({
   return (
     <div className="min-h-screen flex flex-col">
       {/* Nav */}
-      <nav className="border-b border-border px-6 py-4 flex items-center justify-between sticky top-0 bg-bg/90 backdrop-blur-sm z-10">
-        <Link href="/" className="flex items-center gap-3 group">
+      <nav
+        aria-label="Navegación principal"
+        className="border-b border-border px-6 py-4 flex items-center justify-between sticky top-0 bg-bg/90 backdrop-blur-sm z-10"
+      >
+        <Link
+          href="/"
+          className="flex items-center gap-3 group rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
+        >
           <div className="w-7 h-7 rounded-md bg-accent flex items-center justify-center">
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
+            <svg aria-hidden="true" width="14" height="14" fill="none" viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="3" fill="#fff"/>
               <path d="M12 2v4M12 18v4M2 12h4M18 12h4M5.64 5.64l2.83 2.83M15.54 15.54l2.83 2.83M5.64 18.36l2.83-2.83M15.54 8.46l2.83-2.83" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
             </svg>
@@ -85,9 +91,9 @@ export default async function AnalyzePage({
           <span className="font-semibold text-text-primary tracking-wide text-sm group-hover:text-accent transition-colors">NEXUS</span>
         </Link>
         <div className="flex items-center gap-3">
-          <span className="text-xs text-text-secondary/60 font-mono">Analysis</span>
-          <span className="text-xs text-text-secondary/40">/</span>
-          <span className="text-sm font-mono font-bold text-text-primary">{upperTicker}</span>
+          <span className="text-xs text-text-secondary/60 font-mono">Análisis</span>
+          <span aria-hidden="true" className="text-xs text-text-secondary/40">/</span>
+          <span className="text-sm font-mono font-bold text-text-primary" aria-current="page">{upperTicker}</span>
         </div>
       </nav>
 
@@ -106,10 +112,17 @@ function ErrorState({ ticker, message }: { ticker: string; message: string }) {
   return (
     <div className="flex flex-col items-center justify-center py-32 text-center">
       <div className="w-12 h-12 rounded-full bg-danger/10 border border-danger/30 flex items-center justify-center mb-6">
-        <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="10" stroke="#E05252" strokeWidth="1.5"/>
-          <line x1="12" y1="8" x2="12" y2="12" stroke="#E05252" strokeWidth="1.5" strokeLinecap="round"/>
-          <line x1="12" y1="16" x2="12.01" y2="16" stroke="#E05252" strokeWidth="2" strokeLinecap="round"/>
+        <svg
+          aria-hidden="true"
+          width="20"
+          height="20"
+          fill="none"
+          viewBox="0 0 24 24"
+          className="text-danger"
+        >
+          <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5"/>
+          <line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+          <line x1="12" y1="16" x2="12.01" y2="16" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
         </svg>
       </div>
       <h2 className="text-xl font-semibold text-text-primary mb-2">Analysis Failed</h2>
@@ -120,9 +133,9 @@ function ErrorState({ ticker, message }: { ticker: string; message: string }) {
       <p className="text-xs text-text-secondary/50 font-mono mb-8 max-w-md">{message}</p>
       <Link
         href="/"
-        className="px-5 py-2.5 bg-surface border border-border rounded-lg text-sm text-text-primary hover:border-accent/60 transition-colors"
+        className="px-5 py-2.5 bg-surface border border-border rounded-lg text-sm text-text-primary hover:border-accent/60 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
       >
-        ← Back to Search
+        ← Volver al inicio
       </Link>
     </div>
   );
@@ -133,7 +146,7 @@ function AnalysisView({
   verdict,
 }: {
   data: AnalysisResult;
-  verdict: { color: string; bg: string; border: string };
+  verdict: { color: string; badgeClass: string };
 }) {
   return (
     <div className="flex flex-col gap-10">
@@ -142,25 +155,44 @@ function AnalysisView({
         {/* Ticker + Verdict */}
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-3">
-            <Link href="/" className="text-xs text-text-secondary/60 hover:text-accent transition-colors">
-              ← New search
+            <Link
+              href="/"
+              className="text-xs text-text-secondary/60 hover:text-accent transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
+            >
+              ← Búsqueda nueva
             </Link>
           </div>
-          <h1 className="text-5xl font-bold text-text-primary font-mono tracking-tight mb-2">
+          <h1 className="text-5xl font-bold text-text-primary font-mono tracking-tight mb-1">
             {data.ticker}
           </h1>
+          {data.company_name && (
+            <p className="text-base text-text-secondary font-medium mb-1 truncate max-w-md">
+              {data.company_name}
+            </p>
+          )}
+          {data.current_price !== undefined && (
+            <p className="text-sm text-text-secondary mb-4">
+              <span className="font-mono text-text-primary font-semibold">
+                ${data.current_price.toFixed(2)}
+              </span>
+              {data.pct_change !== undefined && (
+                <span
+                  className={`ml-2 font-mono text-xs ${
+                    data.pct_change >= 0 ? "text-success" : "text-danger"
+                  }`}
+                >
+                  {data.pct_change >= 0 ? "+" : ""}{data.pct_change.toFixed(2)}%
+                </span>
+              )}
+            </p>
+          )}
           <p className="text-sm text-text-secondary mb-6">
-            Multi-agent intelligence report
+            Análisis multi-agente
           </p>
 
           {/* Verdict badge */}
           <div
-            className="inline-flex items-center gap-3 px-5 py-3 rounded-xl border text-2xl font-bold tracking-widest"
-            style={{
-              color: verdict.color,
-              backgroundColor: verdict.bg,
-              borderColor: verdict.border,
-            }}
+            className={`inline-flex items-center gap-3 px-5 py-3 rounded-xl border text-2xl font-bold tracking-widest ${verdict.badgeClass}`}
           >
             {data.verdict.verdict}
           </div>
@@ -217,38 +249,38 @@ function AnalysisView({
 function RiskGauge({ score }: { score: number }) {
   const clamped = Math.max(0, Math.min(100, score));
   const color =
-    clamped >= 70 ? "#E05252" : clamped >= 40 ? "#E8A04A" : "#4CAF7A";
+    clamped >= 70 ? "var(--color-danger)" : clamped >= 40 ? "var(--color-warning)" : "var(--color-success)";
   const label =
     clamped >= 70 ? "HIGH" : clamped >= 40 ? "MEDIUM" : "LOW";
 
   return (
     <>
-      <div className="relative w-16 h-16 flex items-center justify-center">
+      <div aria-hidden="true" className="relative w-16 h-16 flex items-center justify-center">
         <svg width="64" height="64" viewBox="0 0 64 64" className="-rotate-90">
-          <circle cx="32" cy="32" r="26" fill="none" stroke="#232731" strokeWidth="6" />
+          <circle cx="32" cy="32" r="26" fill="none" strokeWidth="6" style={{ stroke: "var(--color-border)" }} />
           <circle
             cx="32"
             cy="32"
             r="26"
             fill="none"
-            stroke={color}
             strokeWidth="6"
             strokeLinecap="round"
             strokeDasharray={`${(clamped / 100) * 163.36} 163.36`}
-            style={{ filter: `drop-shadow(0 0 4px ${color}80)` }}
+            style={{
+              stroke: color,
+              filter: `drop-shadow(0 0 4px color-mix(in oklch, ${color} 50%, transparent))`,
+            }}
           />
         </svg>
-        <span
-          className="absolute text-base font-bold font-mono"
-          style={{ color }}
-        >
+        <span className="absolute text-base font-bold font-mono" style={{ color }}>
           {clamped}
         </span>
       </div>
-      <p className="text-xs font-semibold tracking-widest" style={{ color }}>
+      <p aria-hidden="true" className="text-xs font-semibold tracking-widest" style={{ color }}>
         {label}
       </p>
-      <p className="text-xs text-text-secondary/60 tracking-wider uppercase">Risk</p>
+      <p aria-hidden="true" className="text-xs text-text-secondary/60 tracking-wider uppercase">Risk</p>
+      <span className="sr-only">Puntuación de riesgo: {clamped} — {label}</span>
     </>
   );
 }

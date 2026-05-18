@@ -35,9 +35,9 @@ const AGENT_META: Record<
 };
 
 const STANCE_CONFIG = {
-  bullish: { label: "BULLISH", color: "#4CAF7A", bg: "#4CAF7A18" },
-  bearish: { label: "BEARISH", color: "#E05252", bg: "#E0525218" },
-  neutral: { label: "NEUTRAL", color: "#8A9BB5", bg: "#8A9BB518" },
+  bullish: { label: "BULLISH", colorClass: "text-success",          bgClass: "bg-success/10"          },
+  bearish: { label: "BEARISH", colorClass: "text-danger",           bgClass: "bg-danger/10"           },
+  neutral: { label: "NEUTRAL", colorClass: "text-text-secondary",   bgClass: "bg-text-secondary/10"   },
 };
 
 export default function AgentCard({ data }: { data: AgentOutput }) {
@@ -72,8 +72,7 @@ export default function AgentCard({ data }: { data: AgentOutput }) {
           </div>
         </div>
         <div
-          className="px-2.5 py-1 rounded-md text-xs font-semibold tracking-wider shrink-0"
-          style={{ color: stance.color, backgroundColor: stance.bg }}
+          className={`px-2.5 py-1 rounded-md text-xs font-semibold tracking-wider shrink-0 ${stance.colorClass} ${stance.bgClass}`}
         >
           {stance.label}
         </div>
@@ -89,7 +88,7 @@ export default function AgentCard({ data }: { data: AgentOutput }) {
         </div>
         <div className="h-1.5 bg-surface-elevated rounded-full overflow-hidden">
           <div
-            className="h-full rounded-full transition-all duration-700"
+            className="h-full rounded-full transition-[width] duration-700"
             style={{ width: barWidth, backgroundColor: meta.color, boxShadow: `0 0 6px ${meta.color}60` }}
           />
         </div>
