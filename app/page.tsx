@@ -317,10 +317,10 @@ export default function LandingPage() {
 
         <div className="grid md:grid-cols-4 gap-4 mb-12">
           {[
-            { id: "01", name: "ATLAS", role: "Análisis Fundamental", desc: "Evalúa balances, calidad de earnings y ventajas competitivas. Identifica valor intrínseco antes de que el mercado lo reconozca.", cta: "Decide si el precio justifica el negocio.", color: "#6C8EF2" },
-            { id: "02", name: "SENTINEL", role: "Análisis Técnico", desc: "Lee price action, volumen y momentum. Detecta los movimientos institucionales antes de que sean visibles en las noticias.", cta: "Determina cuándo entrar y cuándo salir.", color: "#4CAF7A" },
-            { id: "03", name: "ECHO", role: "Inteligencia Narrativa", desc: "Procesa noticias, filings y señales sociales en tiempo real vía X/Twitter. Los mercados se mueven por narrativas antes de que los datos las confirmen.", cta: "Captura el sentimiento antes de que impacte.", color: "#F2A93B" },
-            { id: "04", name: "CONTRARIAN", role: "Riesgo & Adversarial", desc: "Destruye cada tesis alcista. Busca riesgos ocultos, downside asimétrico y los escenarios que nadie está descontando.", cta: "Decide el tamaño de posición y stop-loss.", color: "#F25C5C" },
+            { id: "01", name: "ATLAS", role: "Análisis Fundamental", ai: "Claude", desc: "Evalúa balances, calidad de earnings y ventajas competitivas. Identifica valor intrínseco antes de que el mercado lo reconozca.", cta: "Decide si el precio justifica el negocio.", color: "#6C8EF2" },
+            { id: "02", name: "SENTINEL", role: "Análisis Técnico", ai: "GPT-4o", desc: "Lee price action, volumen y momentum. Detecta los movimientos institucionales antes de que sean visibles en las noticias.", cta: "Determina cuándo entrar y cuándo salir.", color: "#4CAF7A" },
+            { id: "03", name: "ECHO", role: "Inteligencia Narrativa", ai: "Grok", desc: "Procesa noticias, filings y señales sociales en tiempo real vía X/Twitter. Los mercados se mueven por narrativas antes de que los datos las confirmen.", cta: "Captura el sentimiento antes de que impacte.", color: "#F2A93B" },
+            { id: "04", name: "CONTRARIAN", role: "Riesgo & Adversarial", ai: "Gemini", desc: "Destruye cada tesis alcista. Busca riesgos ocultos, downside asimétrico y los escenarios que nadie está descontando.", cta: "Decide el tamaño de posición y stop-loss.", color: "#F25C5C" },
           ].map(a => (
             <div key={a.id} className="bg-[#0a0f1a] border border-[#1a2540] hover:border-[#1a2540] rounded-xl p-5 flex flex-col">
               <div className="flex items-start justify-between mb-3">
@@ -328,7 +328,12 @@ export default function LandingPage() {
                 <div className="w-1.5 h-1.5 rounded-full animate-pulse mt-1" style={{ background: a.color }} />
               </div>
               <div className="font-bold mb-0.5" style={{ color: a.color }}>{a.name}</div>
-              <div className="text-xs text-[#3d4f6e] uppercase tracking-wider mb-3">{a.role}</div>
+              <div className="text-xs text-[#3d4f6e] uppercase tracking-wider mb-2">{a.role}</div>
+              {a.ai && (
+                <div className="inline-flex items-center gap-1.5 mb-3 px-2 py-0.5 rounded-md" style={{ backgroundColor: `${a.color}12`, border: `1px solid ${a.color}30` }}>
+                  <span className="text-[10px] font-medium" style={{ color: a.color }}>Powered by {a.ai}</span>
+                </div>
+              )}
               <p className="text-sm text-[#8a9bbf] mb-4 flex-1 leading-relaxed">{a.desc}</p>
               <p className="text-xs" style={{ color: a.color }}>{a.cta}</p>
             </div>
